@@ -1,7 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// import tailwindcss from "@tailwindcss/vite";
+import tsconfigPaths from 'vite-tsconfig-paths';
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+
+  alias: {
+    "~": "/<srcDir>",
+  },
 
   // Configure for static generation (SSG)
   nitro: {
@@ -13,7 +20,7 @@ export default defineNuxtConfig({
   // Production URL configuration
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://jain.wiki'
+      siteUrl: 'https://jain.wiki'
     }
   },
 
@@ -37,13 +44,20 @@ export default defineNuxtConfig({
   },
 
   // CSS configuration with Tailwind
-  css: ['~/assets/css/main.css'],
+  // css: ['~/assets/css/main.css'],
+
+  // Vite configuration
+  vite: {
+    plugins: [
+      // tailwindcss(),
+      tsconfigPaths(),
+    ],
+  },
 
   // Modules
   modules: [
     '@nuxt/scripts',
-    '@nuxt/ui',
-    '@nuxtjs/tailwindcss'
+    '@nuxt/ui'
   ],
 
   // Development server configuration
