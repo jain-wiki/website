@@ -9,6 +9,7 @@
 <script setup>
 // Force light mode on app initialization
 const colorMode = useColorMode()
+colorMode.forced = true
 colorMode.value = 'light'
 
 // Global SEO configuration
