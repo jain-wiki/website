@@ -4,7 +4,7 @@
       <div class="mx-auto" :class="contentWidthClass">
         <header v-if="title || subtitle" class="mb-10 text-center">
           <h2 v-if="title"
-            class="text-3xl sm:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500">
+            class="text-3xl sm:text-4xl font-bold tracking-tight leading-normal bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500">
             {{ title }}
           </h2>
           <p v-if="subtitle" class="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
