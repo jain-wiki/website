@@ -6,11 +6,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // Configure for static generation (SSG)
-  nitro: {
-    prerender: {
-      routes: ['/sitemap.xml']
-    }
-  },
+  // nitro: {
+  //   prerender: {
+  //     routes: ['/sitemap.xml']
+  //   }
+  // },
 
   // Production URL configuration
   runtimeConfig: {
@@ -54,7 +54,8 @@ export default defineNuxtConfig({
   // Modules
   modules: [
     '@nuxt/scripts',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@nuxtjs/sitemap',
   ],
 
   // CSS configuration with Tailwind

@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/scripts": "0.11.13",
     "@nuxt/ui": "3.3.2",
+    "@nuxtjs/sitemap": "^7.4.3",
     "@tailwindcss/vite": "4.1.12",
     "@unhead/vue": "2.0.14",
     "nuxt": "4.0.3",
