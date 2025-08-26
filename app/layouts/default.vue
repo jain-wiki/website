@@ -52,7 +52,7 @@
         <div class="text-center">
           <p>&copy; {{ new Date().getFullYear() }} Jain Wiki. All rights reserved.</p>
           <p class="mt-2 text-gray-400">
-            Built with ❤️ using Nuxt {{ $nuxt.ssrContext?.nuxtVersion || '4.x' }}
+            Built with ❤️ using Nuxt, Tailwind CSS in India 🇮🇳
           </p>
         </div>
       </div>
