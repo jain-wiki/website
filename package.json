@@ -23,5 +23,5 @@
     "vite-tsconfig-paths": "^5.1.4",
     "vue-tsc": "^3.0.6"
   },
-  "packageManager": "bun@1.2.19"
+  "packageManager": "bun@1.2.21"
 }
