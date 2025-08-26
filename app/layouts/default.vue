@@ -1,22 +1,22 @@
 <template>
   <div class="page-container">
     <!-- Header -->
-    <header class="bg-white border-b border-gray-200 shadow-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-white shadow-sm border-gray-200 border-b">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div class="flex justify-between items-center h-16">
           <!-- Logo/Brand -->
           <div class="flex items-center">
-            <NuxtLink to="/" class="text-xl font-bold text-gray-900">
+            <NuxtLink to="/" class="font-bold text-gray-900 text-xl">
               Jain Wiki
             </NuxtLink>
           </div>
 
           <!-- Navigation -->
           <nav class="hidden md:flex space-x-8">
-            <NuxtLink to="/" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">
+            <NuxtLink to="/" class="px-3 py-2 font-medium text-gray-900 hover:text-blue-600 text-sm">
               Home
             </NuxtLink>
-            <NuxtLink to="/about" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium">
+            <NuxtLink to="/about" class="px-3 py-2 font-medium text-gray-900 hover:text-blue-600 text-sm">
               About
             </NuxtLink>
           </nav>
@@ -28,12 +28,12 @@
         </div>
 
         <!-- Mobile Navigation -->
-        <div v-if="mobileMenuOpen" class="md:hidden py-2 border-t border-gray-200">
-          <div class="px-2 pt-2 pb-3 space-y-1">
-            <NuxtLink to="/" class="text-gray-900 hover:text-blue-600 block px-3 py-2 text-base font-medium">
+        <div v-if="mobileMenuOpen" class="md:hidden py-2 border-gray-200 border-t">
+          <div class="space-y-1 px-2 pt-2 pb-3">
+            <NuxtLink to="/" class="block px-3 py-2 font-medium text-gray-900 hover:text-blue-600 text-base">
               Home
             </NuxtLink>
-            <NuxtLink to="/about" class="text-gray-900 hover:text-blue-600 block px-3 py-2 text-base font-medium">
+            <NuxtLink to="/about" class="block px-3 py-2 font-medium text-gray-900 hover:text-blue-600 text-base">
               About
             </NuxtLink>
           </div>
@@ -48,7 +48,7 @@
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl">
         <div class="text-center">
           <p>&copy; {{ new Date().getFullYear() }} Jain Wiki. All rights reserved.</p>
           <p class="mt-2 text-gray-400">

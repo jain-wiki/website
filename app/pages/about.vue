@@ -2,12 +2,12 @@
   <div>
     <!-- Hero Section -->
     <section class="bg-gray-50 py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div class="text-center">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 class="mb-6 font-bold text-gray-900 text-4xl md:text-5xl">
             About Jain Wiki
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <p class="mx-auto max-w-3xl text-gray-600 text-lg md:text-xl">
             Learn more about our mission, vision, and the team behind this platform.
           </p>
         </div>
@@ -16,25 +16,25 @@
 
     <!-- Content Sections -->
     <section class="py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="items-center gap-12 grid grid-cols-1 lg:grid-cols-2">
           <!-- Our Mission -->
           <div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+            <h2 class="mb-6 font-bold text-gray-900 text-3xl">
               Our Mission
             </h2>
-            <p class="text-lg text-gray-600 mb-6">
+            <p class="mb-6 text-gray-600 text-lg">
               We are dedicated to creating a comprehensive knowledge hub that empowers individuals
               and organizations with the information they need to succeed.
             </p>
-            <p class="text-lg text-gray-600">
+            <p class="text-gray-600 text-lg">
               Our platform is built with modern technologies and designed to provide
               fast, reliable, and secure access to knowledge.
             </p>
           </div>
 
           <!-- Placeholder for image -->
-          <div class="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
+          <div class="flex justify-center items-center bg-gray-200 rounded-lg h-64">
             <p class="text-gray-500">Mission Image Placeholder</p>
           </div>
         </div>
@@ -42,23 +42,23 @@
     </section>
 
     <!-- Values Section -->
-    <section class="py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+    <section class="bg-gray-50 py-16">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="mb-12 text-center">
+          <h2 class="mb-4 font-bold text-gray-900 text-3xl">
             Our Values
           </h2>
-          <p class="text-lg text-gray-600">
+          <p class="text-gray-600 text-lg">
             The principles that guide everything we do
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <div v-for="value in values" :key="value.title" class="text-center">
-            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <UIcon :name="value.icon" class="text-2xl text-blue-600" />
+            <div class="flex justify-center items-center bg-blue-100 mx-auto mb-4 rounded-full w-16 h-16">
+              <UIcon :name="value.icon" class="text-blue-600 text-2xl" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ value.title }}</h3>
+            <h3 class="mb-2 font-semibold text-gray-900 text-xl">{{ value.title }}</h3>
             <p class="text-gray-600">{{ value.description }}</p>
           </div>
         </div>
@@ -67,20 +67,20 @@
 
     <!-- Stats Section -->
     <section class="py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="mb-12 text-center">
+          <h2 class="mb-4 font-bold text-gray-900 text-3xl">
             By the Numbers
           </h2>
-          <p class="text-lg text-gray-600">
+          <p class="text-gray-600 text-lg">
             Some key metrics about our platform
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="gap-8 grid grid-cols-1 md:grid-cols-3">
           <div v-for="stat in stats" :key="stat.label" class="text-center">
-            <div class="text-4xl font-bold text-blue-600 mb-2">{{ stat.value }}</div>
-            <div class="text-lg font-medium text-gray-900 mb-1">{{ stat.label }}</div>
+            <div class="mb-2 font-bold text-blue-600 text-4xl">{{ stat.value }}</div>
+            <div class="mb-1 font-medium text-gray-900 text-lg">{{ stat.label }}</div>
             <div class="text-gray-600">{{ stat.description }}</div>
           </div>
         </div>
@@ -88,12 +88,12 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="py-16 bg-blue-600 text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold mb-4">
+    <section class="bg-blue-600 py-16 text-white">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
+        <h2 class="mb-4 font-bold text-3xl">
           Get in Touch
         </h2>
-        <p class="text-lg mb-8 text-blue-100">
+        <p class="mb-8 text-blue-100 text-lg">
           Have questions or want to learn more? We'd love to hear from you.
         </p>
         <UButton size="lg" color="white" variant="solid" disabled>

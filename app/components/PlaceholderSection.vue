@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+  <div class="bg-yellow-50 p-4 border border-yellow-200 rounded-lg">
     <div class="flex items-start">
-      <UIcon name="i-heroicons-exclamation-triangle" class="text-yellow-400 text-xl mr-3 mt-0.5" />
+      <UIcon name="i-heroicons-exclamation-triangle" class="mt-0.5 mr-3 text-yellow-400 text-xl" />
       <div>
-        <h3 class="text-yellow-800 font-medium mb-1">
+        <h3 class="mb-1 font-medium text-yellow-800">
           Under Construction
         </h3>
         <p class="text-yellow-700 text-sm">
