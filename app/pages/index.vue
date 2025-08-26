@@ -77,6 +77,12 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://jain.wiki' }
+  ]
+})
+
 // Features data
 const features = [
   {
