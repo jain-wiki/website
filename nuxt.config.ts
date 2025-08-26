@@ -1,14 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// import tailwindcss from "@tailwindcss/vite";
-import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-
-  alias: {
-    "~": "/<srcDir>",
-  },
 
   // Configure for static generation (SSG)
   nitro: {
@@ -26,6 +21,7 @@ export default defineNuxtConfig({
 
   // Global head configuration
   app: {
+    baseURL: '/',
     head: {
       title: 'Jain Wiki - Your Knowledge Hub',
       htmlAttrs: {
@@ -35,22 +31,23 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Welcome to Jain Wiki - your comprehensive knowledge hub' },
-        { name: 'format-detection', content: 'telephone=no' }
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:site_name', content: 'Jain Wiki' },
+        { property: 'og:type', content: 'website' },
+        { name: 'author', content: 'Jain Wiki Team' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      ]
+      ],
     }
   },
 
-  // CSS configuration with Tailwind
-  // css: ['~/assets/css/main.css'],
 
   // Vite configuration
   vite: {
     plugins: [
-      // tailwindcss(),
-      tsconfigPaths(),
+      tailwindcss(),
     ],
   },
 
@@ -59,6 +56,9 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/ui'
   ],
+
+  // CSS configuration with Tailwind
+  css: ['~/assets/css/main.css'],
 
   // Development server configuration
   devServer: {
