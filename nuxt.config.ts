@@ -68,6 +68,7 @@ export default defineNuxtConfig({
   // UI module configuration
   ui: {
     // Configure Nuxt UI settings
+    colorMode: false,
   },
 
   // TypeScript configuration
