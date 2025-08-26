@@ -1,5 +1,5 @@
 <template>
-  <SectionWrapper id="impact" title="Impact of Jain Wiki" wrapperClass="bg-gradient-to-b from-white to-sky-50">
+  <HomeSectionWrapper id="impact" title="Impact of Jain Wiki" wrapperClass="bg-gradient-to-b from-white to-sky-50">
     <div class="grid lg:grid-cols-3 gap-10">
       <div class="lg:col-span-2 space-y-10">
         <div class="grid sm:grid-cols-2 gap-6">
@@ -74,7 +74,7 @@
         </div>
       </div>
     </div>
-  </SectionWrapper>
+  </HomeSectionWrapper>
 </template>
 
 <script setup>

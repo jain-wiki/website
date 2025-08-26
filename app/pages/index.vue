@@ -1,12 +1,12 @@
 <template>
   <div>
-    <HeroSection />
-    <MissionSection />
-    <WhySection />
-    <DifferenceSection />
-    <HowSection />
-    <ImpactSection />
-    <GetInvolvedSection />
+    <HomeHeroSection />
+    <HomeMissionSection />
+    <HomeWhySection />
+    <HomeDifferenceSection />
+    <HomeHowSection />
+    <HomeImpactSection />
+    <HomeGetInvolvedSection />
   </div>
 </template>
 

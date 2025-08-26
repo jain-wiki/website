@@ -1,5 +1,6 @@
 <template>
-  <SectionWrapper id="difference" title="What Makes Us Different" wrapperClass="bg-gradient-to-b from-sky-50 to-white">
+  <HomeSectionWrapper id="difference" title="What Makes Us Different"
+    wrapperClass="bg-gradient-to-b from-sky-50 to-white">
     <div class="grid md:grid-cols-2 gap-10">
       <div>
         <div class="space-y-4">
@@ -55,7 +56,7 @@
         <p class="mt-4 text-sm text-gray-600">Structured data means powerful discovery and research.</p>
       </div>
     </div>
-  </SectionWrapper>
+  </HomeSectionWrapper>
 </template>
 
 <script setup>

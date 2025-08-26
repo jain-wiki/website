@@ -1,5 +1,5 @@
 <template>
-  <SectionWrapper id="why" title="Why Jain Wiki?" wrapperClass="bg-white" narrow>
+  <HomeSectionWrapper id="why" title="Why Jain Wiki?" wrapperClass="bg-white" narrow>
     <div class="grid md:grid-cols-5 gap-10 items-start">
       <div class="md:col-span-3">
         <p class="text-lg text-gray-600 leading-relaxed">
@@ -32,7 +32,7 @@
         </ul>
       </div>
     </div>
-  </SectionWrapper>
+  </HomeSectionWrapper>
 </template>
 
 <script setup>

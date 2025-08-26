@@ -1,5 +1,5 @@
 <template>
-  <SectionWrapper id="how" title="How We're Building It" wrapperClass="bg-white">
+  <HomeSectionWrapper id="how" title="How We're Building It" wrapperClass="bg-white">
     <div class="grid md:grid-cols-3 gap-8">
       <div class="relative group p-6 bg-gradient-to-br from-sky-50 to-emerald-50 rounded-2xl border border-sky-100">
         <div class="absolute top-4 right-4 text-sky-200 text-5xl font-black select-none">1</div>
@@ -27,7 +27,7 @@
           Wiki—benefiting both ecosystems.</p>
       </div>
     </div>
-  </SectionWrapper>
+  </HomeSectionWrapper>
 </template>
 
 <script setup>

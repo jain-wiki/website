@@ -1,5 +1,5 @@
 <template>
-  <SectionWrapper id="get-involved" title="Get Involved" wrapperClass="bg-white"
+  <HomeSectionWrapper id="get-involved" title="Get Involved" wrapperClass="bg-white"
     subtitle="This is a community movement — your contribution matters.">
     <div class="grid md:grid-cols-3 gap-8">
       <div class="p-6 rounded-2xl border border-sky-100 bg-sky-50/60">
@@ -34,7 +34,7 @@
           the Data</UButton>
       </div>
     </div>
-  </SectionWrapper>
+  </HomeSectionWrapper>
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-  <SectionWrapper id="mission" title="Our Mission"
+  <HomeSectionWrapper id="mission" title="Our Mission"
     subtitle="Building the world's most complete, open, and living database of Jain places.">
     <div class="prose prose-sky max-w-none">
       <p>Jain Wiki is a community-driven initiative to document every Jain place—temples, bhavans, sthanaks,
@@ -31,7 +31,7 @@
         </li>
       </ul>
     </div>
-  </SectionWrapper>
+  </HomeSectionWrapper>
 </template>
 
 <script setup>
