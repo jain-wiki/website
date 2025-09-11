@@ -2,10 +2,10 @@
   <section class="relative overflow-hidden">
     <div class="-z-10 absolute inset-0 bg-gradient-to-br from-white via-sky-50 to-emerald-50"></div>
     <div
-      class="-top-24 -right-32 absolute bg-gradient-to-tr from-sky-200 via-teal-200 to-emerald-200 opacity-40 blur-3xl rounded-full w-[34rem] h-[34rem]">
+      class="-top-24 -right-32 -z-10 absolute bg-gradient-to-tr from-sky-200 via-teal-200 to-emerald-200 opacity-40 blur-3xl rounded-full w-[34rem] h-[34rem]">
     </div>
     <div
-      class="-bottom-32 -left-32 absolute bg-gradient-to-tr from-cyan-200 via-sky-200 to-teal-200 opacity-40 blur-3xl rounded-full w-[30rem] h-[30rem]">
+      class="-bottom-32 -left-32 -z-10 absolute bg-gradient-to-tr from-cyan-200 via-sky-200 to-teal-200 opacity-40 blur-3xl rounded-full w-[30rem] h-[30rem]">
     </div>
 
     <div class="mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 max-w-7xl">
@@ -27,16 +27,18 @@
           </p>
           <div class="flex sm:flex-row flex-col gap-4 mt-8">
             <UButton size="lg" color="sky" variant="solid" :ui="{ rounded: 'rounded-full' }" class="font-semibold"
+              target="_blank" rel="noopener noreferrer" href="https://forms.gle/hWPYva1sXRKyjimf8"
               icon="i-heroicons-user-group">
               Join the Movement
             </UButton>
             <UButton size="lg" color="teal" variant="soft" :ui="{ rounded: 'rounded-full' }" class="font-semibold"
-              icon="i-heroicons-map">
+              target="_blank" rel="noopener noreferrer" href="https://data.jain.wiki" icon="i-heroicons-map">
               Explore the Data
             </UButton>
             <UButton size="lg" color="emerald" variant="ghost" :ui="{ rounded: 'rounded-full' }" class="font-semibold"
+              target="_blank" rel="noopener noreferrer" href="https://github.com/jain-wiki"
               icon="i-heroicons-cloud-arrow-up">
-              Contribute Data
+              Contribute
             </UButton>
           </div>
         </div>
