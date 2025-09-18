@@ -29,83 +29,85 @@
     </div>
 
     <div class="mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl">
-      <!-- Search Form -->
-      <UCard class="mb-6">
-        <template #header>
-          <div class="flex justify-between items-center space-x-2">
-            <UFormField label="Search Text"
-              help="use `OR` `AND` `NOT` to further enhance the search. Use `*` for wildcard search. Can also use quotes for phrase search. Use ( ) for grouping.">
-              <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
-                size="lg" @input="debouncedSearch" class="w-120" />
-            </UFormField>
-            <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters">
-              <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
-              Clear Filters
-            </UButton>
-          </div>
-        </template>
-
-        <div class="space-y-4">
-          <!-- Main Search Input -->
-          <div class="gap-4 grid grid-cols-1 md:grid-cols-3">
-            <UFormField label="Deity" help="Select or search for a specific deity">
-              <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
-                :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
-                @update:search-term="onDeitySearch" label-key="name" class="w-70" />
-            </UFormField>
-            <UFormField label="Place" help="Select or search for a specific place">
-              <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
-                :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
-                @update:search-term="onPlaceSearch" label-key="name" class="w-70" />
-            </UFormField>
-          </div>
-
-          <!-- Location-based Search -->
-          <div class="space-y-4">
-            <div class="flex md:flex-row flex-col items-start md:items-end gap-4">
-              <!-- Near Me Button -->
-              <UFormField label="Location Search" help="Search for places near your current location">
-                <div class="flex items-center space-x-2">
-                  <UButton :loading="locationLoading" :disabled="!isGeolocationSupported() || locationLoading"
-                    variant="outline" color="primary" size="md" @click="getUserLocation">
-                    <UIcon name="i-heroicons-map-pin" class="mr-2 w-4 h-4" />
-                    {{ currentLocation ? 'Update Location' : 'Near Me' }}
-                  </UButton>
-                  <span v-if="currentLocation" class="text-gray-600 dark:text-gray-400 text-sm">
-                    {{ formatCoordinates(currentLocation) }}
-                  </span>
-                  <UButton v-if="currentLocation" variant="ghost" color="error" size="sm" @click="clearLocation">
-                    <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
-                  </UButton>
-                </div>
+      <ClientOnly fallback-tag="span" fallback="Loading search functionality...">
+        <!-- Search Form -->
+        <UCard class="mb-6">
+          <template #header>
+            <div class="flex justify-between items-center space-x-2">
+              <UFormField label="Search Text"
+                help="use `OR` `AND` `NOT` to further enhance the search. Use `*` for wildcard search. Can also use quotes for phrase search. Use ( ) for grouping.">
+                <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
+                  size="lg" @input="debouncedSearch" class="w-120" />
               </UFormField>
+              <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters">
+                <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
+                Clear Filters
+              </UButton>
+            </div>
+          </template>
 
-              <!-- Radius Slider -->
-              <UFormField v-if="currentLocation" label="Radius"
-                :help="`Search within ${searchRadius}km of your location`" class="flex-1 min-w-60">
-                <div class="space-y-2">
-                  <USlider v-model="searchRadius" :min="1" :max="100" :step="1" tooltip color="primary" size="md" />
-                  <div class="flex justify-between text-gray-500 text-xs">
-                    <span>1km</span>
-                    <span class="font-medium">{{ searchRadius }}km</span>
-                    <span>100km</span>
-                  </div>
-                </div>
+          <div class="space-y-4">
+            <!-- Main Search Input -->
+            <div class="gap-4 grid grid-cols-1 md:grid-cols-3">
+              <UFormField label="Deity" help="Select or search for a specific deity">
+                <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
+                  :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
+                  @update:search-term="onDeitySearch" label-key="name" class="w-70" />
+              </UFormField>
+              <UFormField label="Place" help="Select or search for a specific place">
+                <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
+                  :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
+                  @update:search-term="onPlaceSearch" label-key="name" class="w-70" />
               </UFormField>
             </div>
 
-            <!-- Location Error Display -->
-            <UAlert v-if="locationError" color="error" variant="soft" :title="'Location Error'"
-              :description="locationError" :close-button="{ 'aria-label': 'Close' }" @close="locationError = null" />
+            <!-- Location-based Search -->
+            <div class="space-y-4">
+              <div class="flex md:flex-row flex-col items-start md:items-end gap-4">
+                <!-- Near Me Button -->
+                <UFormField label="Location Search" help="Search for places near your current location">
+                  <div class="flex items-center space-x-2">
+                    <UButton :loading="locationLoading" :disabled="!isGeolocationSupported() || locationLoading"
+                      variant="outline" color="primary" size="md" @click="getUserLocation">
+                      <UIcon name="i-heroicons-map-pin" class="mr-2 w-4 h-4" />
+                      {{ currentLocation ? 'Update Location' : 'Near Me' }}
+                    </UButton>
+                    <span v-if="currentLocation" class="text-gray-600 dark:text-gray-400 text-sm">
+                      {{ formatCoordinates(currentLocation) }}
+                    </span>
+                    <UButton v-if="currentLocation" variant="ghost" color="error" size="sm" @click="clearLocation">
+                      <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
+                    </UButton>
+                  </div>
+                </UFormField>
 
-            <!-- Location Permission Warning -->
-            <UAlert v-if="locationPermissionDenied" color="warning" variant="soft"
-              :title="'Location Permission Required'"
-              :description="'To use the &quot;Near Me&quot; feature, please allow location access in your browser settings. You can find this in your browser\'s address bar or settings menu.'"
-              :close-button="{ 'aria-label': 'Close' }" @close="locationPermissionDenied = false" />
+                <!-- Radius Slider -->
+                <UFormField v-if="currentLocation" label="Radius"
+                  :help="`Search within ${searchRadius}km of your location`" class="flex-1 min-w-60">
+                  <div class="space-y-2">
+                    <USlider v-model="searchRadius" :min="1" :max="100" :step="1" tooltip color="primary" size="md" />
+                    <div class="flex justify-between text-gray-500 text-xs">
+                      <span>1km</span>
+                      <span class="font-medium">{{ searchRadius }}km</span>
+                      <span>100km</span>
+                    </div>
+                  </div>
+                </UFormField>
+              </div>
+
+              <!-- Location Error Display -->
+              <UAlert v-if="locationError" color="error" variant="soft" :title="'Location Error'"
+                :description="locationError" :close-button="{ 'aria-label': 'Close' }" @close="locationError = null" />
+
+              <!-- Location Permission Warning -->
+              <UAlert v-if="locationPermissionDenied" color="warning" variant="soft"
+                :title="'Location Permission Required'"
+                :description="'To use the &quot;Near Me&quot; feature, please allow location access in your browser settings. You can find this in your browser\'s address bar or settings menu.'"
+                :close-button="{ 'aria-label': 'Close' }" @close="locationPermissionDenied = false" />
+            </div>
           </div>
-        </div>
-      </UCard>
+        </UCard>
+      </ClientOnly>
 
       <!-- View Toggle (Mobile) -->
       <div class="md:hidden mb-4">
