@@ -67,11 +67,15 @@ export const searchPlaces = async (params: {
   latitude?: number
   longitude?: number
   radius?: number
+  limit?: number
+  offset?: number
 }): Promise<{ results: SearchResult[], error: string | null }> => {
   try {
     const baseUrl = getBaseUrl()
     const query = new URLSearchParams()
 
+    if (params.limit !== undefined) query.append('limit', params.limit.toString())
+    if (params.offset !== undefined) query.append('offset', params.offset.toString())
     if (params.q) query.append('q', params.q)
     if (params.place) query.append('place', params.place)
     if (params.deity) query.append('deity', params.deity)

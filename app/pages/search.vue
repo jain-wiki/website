@@ -161,6 +161,24 @@
           <SearchResultsMap v-if="viewMode === 'map'" :results="searchResults" :loading="searchLoading"
             @select-result="handleResultSelect" />
         </div>
+
+        <!-- Pagination Controls -->
+        <div v-if="searchResults.length === countPerPage && !searchLoading"
+          class="flex justify-center items-center space-x-4 pt-6">
+          <UButton v-if="currentPage > 1" variant="soft" color="primary" size="md" @click="goToPreviousPage">
+            <UIcon name="i-heroicons-chevron-left" class="mr-1 w-4 h-4" />
+            Previous
+          </UButton>
+
+          <span class="text-gray-500 text-sm">
+            Page {{ currentPage }}
+          </span>
+
+          <UButton variant="soft" color="primary" size="md" @click="goToNextPage">
+            Next
+            <UIcon name="i-heroicons-chevron-right" class="ml-1 w-4 h-4" />
+          </UButton>
+        </div>
       </div>
 
       <!-- No Search Yet State -->
@@ -192,12 +210,18 @@ definePageMeta({
   description: 'Search and discover Jain temples and sacred places'
 })
 
+// Router access
+const router = useRouter()
+const route = useRoute()
+
 
 // Search state
+const countPerPage = 100
 const searchQuery = ref('')
 const selectedDeity = ref<DropdownOption | undefined>(undefined)
 const selectedPlace = ref<DropdownOption | undefined>(undefined)
 const viewMode = ref<'list' | 'map'>('list')
+const currentPage = ref(1)
 
 // Results state
 const searchResults = ref<SearchResult[]>([])
@@ -230,15 +254,22 @@ const hasActiveFilters = computed(() => {
 let searchTimeout: NodeJS.Timeout
 const debouncedSearch = () => {
   clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(performSearch, 500)
+  searchTimeout = setTimeout(() => performSearch(true), 500)
 }
 
 // Search function
-async function performSearch() {
+async function performSearch(resetPage = false) {
   if (!hasActiveFilters.value) {
     searchResults.value = []
     hasSearched.value = false
+    currentPage.value = 1
     return
+  }
+
+  // Reset to page 1 if this is a new search (filters changed)
+  if (resetPage) {
+    currentPage.value = 1
+    updatePageInUrl()
   }
 
   searchLoading.value = true
@@ -246,7 +277,10 @@ async function performSearch() {
   hasSearched.value = true
 
   try {
-    const params: any = {}
+    const params: any = {
+      limit: countPerPage,
+      offset: (currentPage.value - 1) * countPerPage
+    }
 
     if (searchQuery.value.trim()) {
       params.q = searchQuery.value.trim()
@@ -345,7 +379,7 @@ async function getUserLocation() {
 
     if (result.success && result.coordinates) {
       currentLocation.value = result.coordinates
-      performSearch() // Automatically search when location is obtained
+      performSearch(true) // Automatically search when location is obtained
     } else {
       // Check if permission was specifically denied
       if (result.error?.code === 1) { // PERMISSION_DENIED
@@ -366,7 +400,29 @@ function clearLocation() {
   currentLocation.value = null
   locationError.value = null
   locationPermissionDenied.value = false
-  performSearch() // Re-search without location
+  performSearch(true) // Re-search without location
+}
+
+// Pagination functions
+function goToNextPage() {
+  currentPage.value += 1
+  updatePageInUrl()
+  performSearch()
+}
+
+function goToPreviousPage() {
+  // Use browser back button for better UX
+  window.history.back()
+}
+
+function updatePageInUrl() {
+  const query = { ...route.query }
+  if (currentPage.value > 1) {
+    query.page = currentPage.value.toString()
+  } else {
+    delete query.page
+  }
+  router.push({ query })
 }
 
 // Handle result selection
@@ -384,6 +440,15 @@ function handleShowOnMap(result: SearchResult) {
 
 // Load initial options on mount
 onMounted(async () => {
+  // Initialize page from URL query parameters
+  const pageParam = route.query.page
+  if (pageParam && typeof pageParam === 'string') {
+    const pageNumber = parseInt(pageParam, 10)
+    if (pageNumber > 0) {
+      currentPage.value = pageNumber
+    }
+  }
+
   // Load some initial deity and place options
   try {
     const [deityResult, placeResult] = await Promise.all([
@@ -400,13 +465,13 @@ onMounted(async () => {
 
 // Watch for filter changes to trigger search
 watch([selectedDeity, selectedPlace], () => {
-  performSearch()
+  performSearch(true)
 })
 
 // Watch for radius changes to trigger search when location is set
 watch(searchRadius, () => {
   if (currentLocation.value) {
-    performSearch()
+    performSearch(true)
   }
 })
 </script>

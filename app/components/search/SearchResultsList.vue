@@ -111,9 +111,7 @@
       </UCard>
     </div>
 
-    <div v-if="results.length > 0" class="pt-4 text-gray-500 text-sm text-center">
-      Showing {{ results.length }} result{{ results.length !== 1 ? 's' : '' }}
-    </div>
+
   </div>
 </template>
 
