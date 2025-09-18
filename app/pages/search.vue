@@ -35,47 +35,30 @@
           <div class="flex items-center space-x-2">
             <UIcon name="i-heroicons-magnifying-glass" class="w-5 h-5 text-gray-400" />
             <span class="font-medium">Search Filters</span>
+            <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters">
+              <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
+              Clear Filters
+            </UButton>
           </div>
         </template>
 
         <div class="space-y-4">
           <!-- Main Search Input -->
-          <div>
-            <UFormGroup label="Search Text" help="Enter keywords to search for temples or places">
+          <div class="gap-4 grid grid-cols-1 md:grid-cols-4">
+            <UFormField label="Search Text" help="Enter keywords to search for temples or places">
               <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
                 size="lg" @input="debouncedSearch" />
-            </UFormGroup>
-          </div>
-
-          <!-- Filters Row -->
-          <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
-            <!-- Deity Filter -->
-            <div>
-              <UFormGroup label="Deity" help="Select or search for a specific deity">
-                <USelectMenu v-model="selectedDeity" :options="deityOptions" placeholder="Select or search deity..."
-                  searchable searchable-placeholder="Type to search deities..." clear-search-on-close
-                  :loading="deityLoading" @query-change="onDeitySearch" option-attribute="name"
-                  value-attribute="value" />
-              </UFormGroup>
-            </div>
-
-            <!-- Place Filter -->
-            <div>
-              <UFormGroup label="Place" help="Select or search for a specific place">
-                <USelectMenu v-model="selectedPlace" :options="placeOptions" placeholder="Select or search place..."
-                  searchable searchable-placeholder="Type to search places..." clear-search-on-close
-                  :loading="placeLoading" @query-change="onPlaceSearch" option-attribute="name"
-                  value-attribute="value" />
-              </UFormGroup>
-            </div>
-          </div>
-
-          <!-- Clear Filters -->
-          <div class="flex justify-end">
-            <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters">
-              <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
-              Clear Filters
-            </UButton>
+            </UFormField>
+            <UFormField label="Deity" help="Select or search for a specific deity">
+              <USelectMenu v-model="selectedDeity" :options="deityOptions" placeholder="Select or search deity..."
+                searchable searchable-placeholder="Type to search deities..." clear-search-on-close
+                :loading="deityLoading" @query-change="onDeitySearch" option-attribute="name" value-attribute="value" />
+            </UFormField>
+            <UFormField label="Place" help="Select or search for a specific place">
+              <USelectMenu v-model="selectedPlace" :options="placeOptions" placeholder="Select or search place..."
+                searchable searchable-placeholder="Type to search places..." clear-search-on-close
+                :loading="placeLoading" @query-change="onPlaceSearch" option-attribute="name" value-attribute="value" />
+            </UFormField>
           </div>
         </div>
       </UCard>
@@ -156,7 +139,6 @@ definePageMeta({
   description: 'Search and discover Jain temples and sacred places'
 })
 
-// API functions imported directly
 
 // Search state
 const searchQuery = ref('')
@@ -234,6 +216,7 @@ async function performSearch() {
 // Deity search function
 async function onDeitySearch(query: string) {
   deityLoading.value = true
+  debugger
   try {
     const { options } = await getDeities(query)
     deityOptions.value = options
@@ -283,21 +266,5 @@ function handleShowOnMap(result: SearchResult) {
 // Watch for filter changes to trigger search
 watch([selectedDeity, selectedPlace], () => {
   performSearch()
-})
-
-// Load initial data
-onMounted(async () => {
-  // Load initial deity and place options
-  try {
-    const [deityResult, placeResult] = await Promise.all([
-      getDeities(),
-      getPlaces()
-    ])
-
-    deityOptions.value = deityResult.options
-    placeOptions.value = placeResult.options
-  } catch (err) {
-    console.error('Failed to load initial data:', err)
-  }
 })
 </script>
