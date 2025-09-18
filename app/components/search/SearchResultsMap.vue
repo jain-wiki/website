@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full">
     <div v-if="loading" class="flex justify-center items-center h-96">
-      <USpinner size="lg" />
+      Loading ...
     </div>
 
     <div v-else-if="results.length === 0 && !loading"
@@ -33,7 +33,7 @@
                 <div class="font-medium text-sm">{{ result.parsedData.name }}</div>
                 <div v-if="result.parsedData.description" class="mt-1 text-gray-500 text-xs">
                   {{ result.parsedData.description.slice(0, 100) }}{{ result.parsedData.description.length > 100 ? '...'
-                  : '' }}
+                    : '' }}
                 </div>
                 <div class="mt-1 text-gray-400 text-xs">
                   {{ result.parsedData.location?.latitude }}, {{ result.parsedData.location?.longitude }}

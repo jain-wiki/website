@@ -1,7 +1,46 @@
 <template>
   <div class="space-y-4">
-    <div v-if="loading" class="flex justify-center py-8">
-      <USpinner size="lg" />
+    <div v-if="loading" class="space-y-3">
+      <UCard v-for="i in 3" :key="i" class="animate-pulse">
+        <template #header>
+          <div class="flex justify-between items-start">
+            <USkeleton class="w-48 h-6" />
+            <USkeleton class="rounded-full w-16 h-5" />
+          </div>
+        </template>
+
+        <div class="space-y-3">
+          <USkeleton class="w-full h-4" />
+          <USkeleton class="w-3/4 h-4" />
+
+          <div class="flex items-center space-x-2">
+            <USkeleton class="rounded-full w-4 h-4" />
+            <USkeleton class="w-32 h-4" />
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-start space-x-2">
+              <USkeleton class="rounded-full w-4 h-4" />
+              <USkeleton class="w-24 h-4" />
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <USkeleton class="rounded-full w-4 h-4" />
+              <USkeleton class="w-28 h-4" />
+            </div>
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-2">
+              <USkeleton class="rounded-md w-24 h-8" />
+              <USkeleton class="rounded-md w-28 h-8" />
+            </div>
+            <USkeleton class="rounded-md w-8 h-8" />
+          </div>
+        </template>
+      </UCard>
     </div>
 
     <div v-else-if="results.length === 0 && !loading" class="py-8 text-gray-500 text-center">
