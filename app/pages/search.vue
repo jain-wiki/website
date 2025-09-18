@@ -52,12 +52,12 @@
             <UFormField label="Deity" help="Select or search for a specific deity">
               <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
                 :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
-                @update:search-term="onDeitySearch" label-key="name" value-key="value" class="w-70" />
+                @update:search-term="onDeitySearch" label-key="name" class="w-70" />
             </UFormField>
             <UFormField label="Place" help="Select or search for a specific place">
               <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
                 :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
-                @update:search-term="onPlaceSearch" label-key="name" value-key="value" class="w-70" />
+                @update:search-term="onPlaceSearch" label-key="name" class="w-70" />
             </UFormField>
           </div>
         </div>
@@ -142,8 +142,8 @@ definePageMeta({
 
 // Search state
 const searchQuery = ref('')
-const selectedDeity = ref<string | undefined>(undefined)
-const selectedPlace = ref<string | undefined>(undefined)
+const selectedDeity = ref<DropdownOption | undefined>(undefined)
+const selectedPlace = ref<DropdownOption | undefined>(undefined)
 const viewMode = ref<'list' | 'map'>('list')
 
 // Results state
@@ -190,11 +190,11 @@ async function performSearch() {
     }
 
     if (selectedDeity.value) {
-      params.deity = selectedDeity.value
+      params.deity = selectedDeity.value.value
     }
 
     if (selectedPlace.value) {
-      params.place = selectedPlace.value
+      params.place = selectedPlace.value.value
     }
 
     const { results, error } = await searchPlaces(params)
@@ -219,6 +219,12 @@ async function onDeitySearch(query: string) {
   try {
     const { options } = await getDeities(query)
     deityOptions.value = options
+
+    // Ensure selected deity remains in options if it's not already there
+    if (selectedDeity.value && !options.find(opt => opt.value === selectedDeity.value!.value)) {
+      // Add the selected deity to the options if it's not already there
+      deityOptions.value.unshift(selectedDeity.value)
+    }
   } catch (err) {
     console.error('Failed to search deities:', err)
   } finally {
@@ -232,6 +238,12 @@ async function onPlaceSearch(query: string) {
   try {
     const { options } = await getPlaces(query)
     placeOptions.value = options
+
+    // Ensure selected place remains in options if it's not already there
+    if (selectedPlace.value && !options.find(opt => opt.value === selectedPlace.value!.value)) {
+      // Add the selected place to the options if it's not already there
+      placeOptions.value.unshift(selectedPlace.value)
+    }
   } catch (err) {
     console.error('Failed to search places:', err)
   } finally {
@@ -261,6 +273,22 @@ function handleShowOnMap(result: SearchResult) {
   // You can implement map focusing here
   console.log('Show on map:', result)
 }
+
+// Load initial options on mount
+onMounted(async () => {
+  // Load some initial deity and place options
+  try {
+    const [deityResult, placeResult] = await Promise.all([
+      getDeities(''),
+      getPlaces('')
+    ])
+
+    deityOptions.value = deityResult.options
+    placeOptions.value = placeResult.options
+  } catch (err) {
+    console.error('Failed to load initial options:', err)
+  }
+})
 
 // Watch for filter changes to trigger search
 watch([selectedDeity, selectedPlace], () => {
