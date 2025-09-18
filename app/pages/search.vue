@@ -52,12 +52,12 @@
               <UFormField label="Deity" help="Select or search for a specific deity">
                 <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
                   :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
-                  @update:search-term="onDeitySearch" label-key="name" class="w-70" />
+                  @update:search-term="onDeitySearch" label-key="name" class="w-full md:w-70" />
               </UFormField>
               <UFormField label="Place" help="Select or search for a specific place">
                 <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
                   :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
-                  @update:search-term="onPlaceSearch" label-key="name" class="w-70" />
+                  @update:search-term="onPlaceSearch" label-key="name" class="w-full md:w-70" />
               </UFormField>
             </div>
 
