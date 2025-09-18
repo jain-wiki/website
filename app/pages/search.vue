@@ -90,11 +90,11 @@
                 <UFormField v-if="currentLocation" label="Radius"
                   :help="`Search within ${searchRadius}km of your location`" class="flex-1 min-w-60">
                   <div class="space-y-2">
-                    <USlider v-model="searchRadius" :min="1" :max="100" :step="1" tooltip color="primary" size="md" />
+                    <USlider v-model="searchRadius" :min="1" :max="50" :step="1" tooltip color="primary" size="md" />
                     <div class="flex justify-between text-gray-500 text-xs">
                       <span>1km</span>
                       <span class="font-medium">{{ searchRadius }}km</span>
-                      <span>100km</span>
+                      <span>50km</span>
                     </div>
                   </div>
                 </UFormField>
