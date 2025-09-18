@@ -33,31 +33,36 @@
         <!-- Search Form -->
         <UCard class="mb-6">
           <template #header>
-            <div class="flex justify-between items-center space-x-2">
-              <UFormField label="Search Text"
-                help="use `OR` `AND` `NOT` to further enhance the search. Use `*` for wildcard search. Can also use quotes for phrase search. Use ( ) for grouping.">
-                <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
-                  size="lg" @input="debouncedSearch" class="w-120" />
-              </UFormField>
-              <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters">
-                <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
-                Clear Filters
-              </UButton>
+            <div class="flex flex-col space-y-4">
+              <div class="flex justify-between items-start">
+                <div class="flex-1">
+                  <UFormField label="Search Text"
+                    help="use `OR` `AND` `NOT` to further enhance the search. Use `*` for wildcard search. Can also use quotes for phrase search. Use ( ) for grouping.">
+                    <UInput v-model="searchQuery" placeholder="Enter search keywords..."
+                      icon="i-heroicons-magnifying-glass" size="lg" @input="debouncedSearch" class="w-full" />
+                  </UFormField>
+                </div>
+                <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters"
+                  class="mt-6 ml-4">
+                  <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
+                  Clear Filters
+                </UButton>
+              </div>
             </div>
           </template>
 
           <div class="space-y-4">
-            <!-- Main Search Input -->
-            <div class="gap-4 grid grid-cols-1 md:grid-cols-3">
+            <!-- Filter Options -->
+            <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
               <UFormField label="Deity" help="Select or search for a specific deity">
                 <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
                   :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
-                  @update:search-term="onDeitySearch" label-key="name" class="w-full md:w-70" />
+                  @update:search-term="onDeitySearch" label-key="name" class="w-full" />
               </UFormField>
               <UFormField label="Place" help="Select or search for a specific place">
                 <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
                   :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
-                  @update:search-term="onPlaceSearch" label-key="name" class="w-full md:w-70" />
+                  @update:search-term="onPlaceSearch" label-key="name" class="w-full" />
               </UFormField>
             </div>
 
