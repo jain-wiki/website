@@ -50,14 +50,14 @@
                 size="lg" @input="debouncedSearch" />
             </UFormField>
             <UFormField label="Deity" help="Select or search for a specific deity">
-              <USelectMenu v-model="selectedDeity" :options="deityOptions" placeholder="Select or search deity..."
-                searchable searchable-placeholder="Type to search deities..." clear-search-on-close
-                :loading="deityLoading" @query-change="onDeitySearch" option-attribute="name" value-attribute="value" />
+              <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
+                :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
+                @update:search-term="onDeitySearch" label-key="name" value-key="value" />
             </UFormField>
             <UFormField label="Place" help="Select or search for a specific place">
-              <USelectMenu v-model="selectedPlace" :options="placeOptions" placeholder="Select or search place..."
-                searchable searchable-placeholder="Type to search places..." clear-search-on-close
-                :loading="placeLoading" @query-change="onPlaceSearch" option-attribute="name" value-attribute="value" />
+              <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
+                :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
+                @update:search-term="onPlaceSearch" label-key="name" value-key="value" />
             </UFormField>
           </div>
         </div>
@@ -142,8 +142,8 @@ definePageMeta({
 
 // Search state
 const searchQuery = ref('')
-const selectedDeity = ref<DropdownOption | null>(null)
-const selectedPlace = ref<DropdownOption | null>(null)
+const selectedDeity = ref<string | undefined>(undefined)
+const selectedPlace = ref<string | undefined>(undefined)
 const viewMode = ref<'list' | 'map'>('list')
 
 // Results state
@@ -160,7 +160,7 @@ const placeLoading = ref(false)
 
 // Computed
 const hasActiveFilters = computed(() => {
-  return searchQuery.value.trim() !== '' || selectedDeity.value !== null || selectedPlace.value !== null
+  return searchQuery.value.trim() !== '' || selectedDeity.value !== undefined || selectedPlace.value !== undefined
 })
 
 // Debounced search function
@@ -190,11 +190,11 @@ async function performSearch() {
     }
 
     if (selectedDeity.value) {
-      params.deity = selectedDeity.value.value
+      params.deity = selectedDeity.value
     }
 
     if (selectedPlace.value) {
-      params.place = selectedPlace.value.value
+      params.place = selectedPlace.value
     }
 
     const { results, error } = await searchPlaces(params)
@@ -216,7 +216,6 @@ async function performSearch() {
 // Deity search function
 async function onDeitySearch(query: string) {
   deityLoading.value = true
-  debugger
   try {
     const { options } = await getDeities(query)
     deityOptions.value = options
@@ -243,8 +242,8 @@ async function onPlaceSearch(query: string) {
 // Clear all filters
 function clearFilters() {
   searchQuery.value = ''
-  selectedDeity.value = null
-  selectedPlace.value = null
+  selectedDeity.value = undefined
+  selectedPlace.value = undefined
   searchResults.value = []
   searchError.value = null
   hasSearched.value = false
