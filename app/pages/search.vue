@@ -44,7 +44,7 @@
 
         <div class="space-y-4">
           <!-- Main Search Input -->
-          <div class="gap-4 grid grid-cols-1 md:grid-cols-4">
+          <div class="gap-4 grid grid-cols-1 md:grid-cols-3">
             <UFormField label="Search Text" help="Enter keywords to search for temples or places">
               <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
                 size="lg" @input="debouncedSearch" />
@@ -52,12 +52,12 @@
             <UFormField label="Deity" help="Select or search for a specific deity">
               <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
                 :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
-                @update:search-term="onDeitySearch" label-key="name" value-key="value" />
+                @update:search-term="onDeitySearch" label-key="name" value-key="value" class="w-70" />
             </UFormField>
             <UFormField label="Place" help="Select or search for a specific place">
               <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
                 :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
-                @update:search-term="onPlaceSearch" label-key="name" value-key="value" />
+                @update:search-term="onPlaceSearch" label-key="name" value-key="value" class="w-70" />
             </UFormField>
           </div>
         </div>
