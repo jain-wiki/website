@@ -93,6 +93,25 @@ export function isGeolocationSupported(): boolean {
 }
 
 /**
+ * Check if location permission has been denied
+ * @returns Promise<boolean>
+ */
+export async function isLocationPermissionDenied(): Promise<boolean> {
+  // Check if we're in a browser environment and permissions API is supported
+  if (typeof window === 'undefined' || typeof navigator === 'undefined' || !navigator.permissions) {
+    return false
+  }
+
+  try {
+    const result = await navigator.permissions.query({ name: 'geolocation' as PermissionName })
+    return result.state === 'denied'
+  } catch (error) {
+    // If permissions API is not supported or query fails, we can't determine permission status
+    return false
+  }
+}
+
+/**
  * Format coordinates for display
  * @param coordinates LocationCoordinates
  * @param precision Number of decimal places (default: 4)

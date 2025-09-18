@@ -97,6 +97,12 @@
             <!-- Location Error Display -->
             <UAlert v-if="locationError" color="error" variant="soft" :title="'Location Error'"
               :description="locationError" :close-button="{ 'aria-label': 'Close' }" @close="locationError = null" />
+
+            <!-- Location Permission Warning -->
+            <UAlert v-if="locationPermissionDenied" color="warning" variant="soft"
+              :title="'Location Permission Required'"
+              :description="'To use the &quot;Near Me&quot; feature, please allow location access in your browser settings. You can find this in your browser\'s address bar or settings menu.'"
+              :close-button="{ 'aria-label': 'Close' }" @close="locationPermissionDenied = false" />
           </div>
         </div>
       </UCard>
@@ -169,7 +175,7 @@
 import type { SearchResult, DropdownOption } from '~/utils/searchApi'
 import { searchPlaces, getDeities, getPlaces } from '~/utils/searchApi'
 import type { LocationCoordinates } from '~/utils/location'
-import { getCurrentLocation, isGeolocationSupported, formatCoordinates } from '~/utils/location'
+import { getCurrentLocation, isGeolocationSupported, formatCoordinates, isLocationPermissionDenied } from '~/utils/location'
 import SearchResultsList from '~/components/search/SearchResultsList.vue'
 import SearchResultsMap from '~/components/search/SearchResultsMap.vue'
 
@@ -203,6 +209,7 @@ const currentLocation = ref<LocationCoordinates | null>(null)
 const searchRadius = ref(10) // Default 10km radius
 const locationLoading = ref(false)
 const locationError = ref<string | null>(null)
+const locationPermissionDenied = ref(false)
 
 // Computed
 const hasActiveFilters = computed(() => {
@@ -314,6 +321,7 @@ function clearFilters() {
   selectedPlace.value = undefined
   currentLocation.value = null
   locationError.value = null
+  locationPermissionDenied.value = false
   searchResults.value = []
   searchError.value = null
   hasSearched.value = false
@@ -323,6 +331,7 @@ function clearFilters() {
 async function getUserLocation() {
   locationLoading.value = true
   locationError.value = null
+  locationPermissionDenied.value = false
 
   try {
     const result = await getCurrentLocation()
@@ -331,7 +340,12 @@ async function getUserLocation() {
       currentLocation.value = result.coordinates
       performSearch() // Automatically search when location is obtained
     } else {
-      locationError.value = result.error?.message || 'Failed to get location'
+      // Check if permission was specifically denied
+      if (result.error?.code === 1) { // PERMISSION_DENIED
+        locationPermissionDenied.value = true
+      } else {
+        locationError.value = result.error?.message || 'Failed to get location'
+      }
     }
   } catch (err) {
     locationError.value = 'An unexpected error occurred while getting location'
@@ -344,6 +358,7 @@ async function getUserLocation() {
 function clearLocation() {
   currentLocation.value = null
   locationError.value = null
+  locationPermissionDenied.value = false
   performSearch() // Re-search without location
 }
 
