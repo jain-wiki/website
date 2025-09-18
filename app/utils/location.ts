@@ -21,8 +21,8 @@ export interface LocationResult {
  */
 export async function getCurrentLocation(options?: PositionOptions): Promise<LocationResult> {
   return new Promise((resolve) => {
-    // Check if geolocation is supported
-    if (!navigator.geolocation) {
+    // Check if we're in a browser environment and geolocation is supported
+    if (typeof window === 'undefined' || typeof navigator === 'undefined' || !navigator.geolocation) {
       resolve({
         success: false,
         error: {
@@ -85,6 +85,10 @@ export async function getCurrentLocation(options?: PositionOptions): Promise<Loc
  * @returns boolean
  */
 export function isGeolocationSupported(): boolean {
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return false
+  }
   return 'geolocation' in navigator
 }
 
