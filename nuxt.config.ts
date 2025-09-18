@@ -15,7 +15,8 @@ export default defineNuxtConfig({
   // Production URL configuration
   runtimeConfig: {
     public: {
-      siteUrl: 'https://jain.wiki'
+      siteUrl: 'https://jain.wiki',
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:3001'
     }
   },
 
