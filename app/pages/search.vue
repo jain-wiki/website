@@ -32,9 +32,12 @@
       <!-- Search Form -->
       <UCard class="mb-6">
         <template #header>
-          <div class="flex items-center space-x-2">
-            <UIcon name="i-heroicons-magnifying-glass" class="w-5 h-5 text-gray-400" />
-            <span class="font-medium">Search Filters</span>
+          <div class="flex justify-between items-center space-x-2">
+            <UFormField label="Search Text"
+              help="use `OR` `AND` `NOT` to further enhance the search. Use `*` for wildcard search. Can also use quotes for phrase search. Use ( ) for grouping.">
+              <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
+                size="lg" @input="debouncedSearch" class="w-120" />
+            </UFormField>
             <UButton variant="soft" color="neutral" size="sm" @click="clearFilters" :disabled="!hasActiveFilters">
               <UIcon name="i-heroicons-x-mark" class="mr-1 w-3 h-3" />
               Clear Filters
@@ -45,10 +48,6 @@
         <div class="space-y-4">
           <!-- Main Search Input -->
           <div class="gap-4 grid grid-cols-1 md:grid-cols-3">
-            <UFormField label="Search Text" help="Enter keywords to search for temples or places">
-              <UInput v-model="searchQuery" placeholder="Enter search keywords..." icon="i-heroicons-magnifying-glass"
-                size="lg" @input="debouncedSearch" />
-            </UFormField>
             <UFormField label="Deity" help="Select or search for a specific deity">
               <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
                 :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
