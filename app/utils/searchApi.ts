@@ -64,6 +64,9 @@ export const searchPlaces = async (params: {
   q?: string
   place?: string
   deity?: string
+  latitude?: number
+  longitude?: number
+  radius?: number
 }): Promise<{ results: SearchResult[], error: string | null }> => {
   try {
     const baseUrl = getBaseUrl()
@@ -72,6 +75,9 @@ export const searchPlaces = async (params: {
     if (params.q) query.append('q', params.q)
     if (params.place) query.append('place', params.place)
     if (params.deity) query.append('deity', params.deity)
+    if (params.latitude !== undefined) query.append('latitude', params.latitude.toString())
+    if (params.longitude !== undefined) query.append('longitude', params.longitude.toString())
+    if (params.radius !== undefined) query.append('radius', params.radius.toString())
 
     const response = await $fetch<ApiResponse>(`${baseUrl}/search?${query.toString()}`)
     return {

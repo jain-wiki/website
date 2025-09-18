@@ -59,6 +59,45 @@
                 @update:search-term="onPlaceSearch" label-key="name" class="w-70" />
             </UFormField>
           </div>
+
+          <!-- Location-based Search -->
+          <div class="space-y-4">
+            <div class="flex md:flex-row flex-col items-start md:items-end gap-4">
+              <!-- Near Me Button -->
+              <UFormField label="Location Search" help="Search for places near your current location">
+                <div class="flex items-center space-x-2">
+                  <UButton :loading="locationLoading" :disabled="!isGeolocationSupported() || locationLoading"
+                    variant="outline" color="primary" size="md" @click="getUserLocation">
+                    <UIcon name="i-heroicons-map-pin" class="mr-2 w-4 h-4" />
+                    {{ currentLocation ? 'Update Location' : 'Near Me' }}
+                  </UButton>
+                  <span v-if="currentLocation" class="text-gray-600 dark:text-gray-400 text-sm">
+                    {{ formatCoordinates(currentLocation) }}
+                  </span>
+                  <UButton v-if="currentLocation" variant="ghost" color="error" size="sm" @click="clearLocation">
+                    <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
+                  </UButton>
+                </div>
+              </UFormField>
+
+              <!-- Radius Slider -->
+              <UFormField v-if="currentLocation" label="Radius"
+                :help="`Search within ${searchRadius}km of your location`" class="flex-1 min-w-60">
+                <div class="space-y-2">
+                  <USlider v-model="searchRadius" :min="1" :max="100" :step="1" tooltip color="primary" size="md" />
+                  <div class="flex justify-between text-gray-500 text-xs">
+                    <span>1km</span>
+                    <span class="font-medium">{{ searchRadius }}km</span>
+                    <span>100km</span>
+                  </div>
+                </div>
+              </UFormField>
+            </div>
+
+            <!-- Location Error Display -->
+            <UAlert v-if="locationError" color="error" variant="soft" :title="'Location Error'"
+              :description="locationError" :close-button="{ 'aria-label': 'Close' }" @close="locationError = null" />
+          </div>
         </div>
       </UCard>
 
@@ -129,6 +168,8 @@
 <script setup lang="ts">
 import type { SearchResult, DropdownOption } from '~/utils/searchApi'
 import { searchPlaces, getDeities, getPlaces } from '~/utils/searchApi'
+import type { LocationCoordinates } from '~/utils/location'
+import { getCurrentLocation, isGeolocationSupported, formatCoordinates } from '~/utils/location'
 import SearchResultsList from '~/components/search/SearchResultsList.vue'
 import SearchResultsMap from '~/components/search/SearchResultsMap.vue'
 
@@ -157,9 +198,18 @@ const placeOptions = ref<DropdownOption[]>([])
 const deityLoading = ref(false)
 const placeLoading = ref(false)
 
+// Location state
+const currentLocation = ref<LocationCoordinates | null>(null)
+const searchRadius = ref(10) // Default 10km radius
+const locationLoading = ref(false)
+const locationError = ref<string | null>(null)
+
 // Computed
 const hasActiveFilters = computed(() => {
-  return searchQuery.value.trim() !== '' || selectedDeity.value !== undefined || selectedPlace.value !== undefined
+  return searchQuery.value.trim() !== '' ||
+    selectedDeity.value !== undefined ||
+    selectedPlace.value !== undefined ||
+    currentLocation.value !== null
 })
 
 // Debounced search function
@@ -194,6 +244,13 @@ async function performSearch() {
 
     if (selectedPlace.value) {
       params.place = selectedPlace.value.value
+    }
+
+    // Add location parameters if available
+    if (currentLocation.value) {
+      params.latitude = currentLocation.value.latitude
+      params.longitude = currentLocation.value.longitude
+      params.radius = searchRadius.value * 1000 // Convert km to meters for API
     }
 
     const { results, error } = await searchPlaces(params)
@@ -255,9 +312,39 @@ function clearFilters() {
   searchQuery.value = ''
   selectedDeity.value = undefined
   selectedPlace.value = undefined
+  currentLocation.value = null
+  locationError.value = null
   searchResults.value = []
   searchError.value = null
   hasSearched.value = false
+}
+
+// Get user location
+async function getUserLocation() {
+  locationLoading.value = true
+  locationError.value = null
+
+  try {
+    const result = await getCurrentLocation()
+
+    if (result.success && result.coordinates) {
+      currentLocation.value = result.coordinates
+      performSearch() // Automatically search when location is obtained
+    } else {
+      locationError.value = result.error?.message || 'Failed to get location'
+    }
+  } catch (err) {
+    locationError.value = 'An unexpected error occurred while getting location'
+  } finally {
+    locationLoading.value = false
+  }
+}
+
+// Clear location
+function clearLocation() {
+  currentLocation.value = null
+  locationError.value = null
+  performSearch() // Re-search without location
 }
 
 // Handle result selection
@@ -292,5 +379,12 @@ onMounted(async () => {
 // Watch for filter changes to trigger search
 watch([selectedDeity, selectedPlace], () => {
   performSearch()
+})
+
+// Watch for radius changes to trigger search when location is set
+watch(searchRadius, () => {
+  if (currentLocation.value) {
+    performSearch()
+  }
 })
 </script>
