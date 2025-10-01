@@ -117,7 +117,8 @@
               <UIcon name="i-heroicons-arrow-right" class="w-3 h-3" />
             </UButton>
           </div>
-          {{ result }}
+          <!-- For Debug only -->
+          <!-- {{ result }} -->
         </template>
       </UCard>
     </div>
