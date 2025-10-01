@@ -57,21 +57,26 @@
               {{ result.parsedData.name || 'Unnamed Place' }}
             </h3>
             <div>
-              <UBadge color="primary" variant="soft" size="sm">
-                ID: Q{{ result.id }}
+              <UBadge color="primary" variant="soft">
+                Q{{ result.id }}
               </UBadge>
             </div>
           </div>
         </template>
 
         <div class="space-y-3">
-          <p v-if="result.parsedData.description" class="text-gray-600 dark:text-gray-400 text-sm">
-            <UIcon name="i-heroicons-map-pin" class="w-4 h-4" />
-            <span> {{ result.parsedData.description }} </span>
-            <span v-if="result.parsedData.location">
-              {{ result.parsedData.location.latitude }}, {{ result.parsedData.location.longitude }}
+          <div class="flex items-start space-x-2">
+            <span v-if="result.parsedData.description" class="flex items-start space-x-2 text-sm">
+              <UIcon name="i-heroicons-map" class="mt-0.5 w-4 h-4" />
+              <span> {{ result.parsedData.description }} </span>
             </span>
-          </p>
+            <span v-if="result.parsedData.location" class="flex items-start space-x-2 text-sm">
+              <UIcon name="i-heroicons-map-pin" class="mt-0.5 w-4 h-4" />
+              <span>
+                {{ result.parsedData.location.latitude }}, {{ result.parsedData.location.longitude }}
+              </span>
+            </span>
+          </div>
 
           <div v-if="result.parsedData.claims" class="space-y-2">
             <div v-if="result.parsedData.claims.P14" class="flex items-start space-x-2 text-sm">
@@ -81,7 +86,7 @@
               </span>
 
               <span v-if="result.parsedData.claims.P15" class="flex items-center space-x-2 text-sm">
-                <UIcon name="i-heroicons-map" class="w-4 h-4 text-gray-400" />
+                <UIcon name="i-heroicons-map" class="mt-0.5 w-4 h-4 text-gray-400" />
                 <span class="text-gray-600 dark:text-gray-400">Postal Code:
                   {{ result.parsedData.claims.P15.join(',') }}
                 </span>
