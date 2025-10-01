@@ -57,9 +57,10 @@
               {{ result.parsedData.name || 'Unnamed Place' }}
             </h3>
             <div>
-              <UBadge color="primary" variant="soft">
+              <UButton :to="`https://data.jain.wiki/wiki/Item:Q${result.id}`" target="_blank" color="primary"
+                variant="soft" size="xs" trailing-icon="i-heroicons-arrow-top-right-on-square">
                 Q{{ result.id }}
-              </UBadge>
+              </UButton>
             </div>
           </div>
         </template>
