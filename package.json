@@ -30,5 +30,6 @@
   "packageManager": "bun@1.2.21",
   "trustedDependencies": [
     "@tailwindcss/oxide"
-  ]
+  ],
+  "version": "0.1.0"
 }
