@@ -56,33 +56,36 @@
             <h3 class="font-semibold text-gray-900 dark:text-white text-lg">
               {{ result.parsedData.name || 'Unnamed Place' }}
             </h3>
-            <UBadge color="primary" variant="soft" size="sm">
-              ID: {{ result.id }}
-            </UBadge>
+            <div>
+              <UBadge color="primary" variant="soft" size="sm">
+                ID: Q{{ result.id }}
+              </UBadge>
+            </div>
           </div>
         </template>
 
         <div class="space-y-3">
           <p v-if="result.parsedData.description" class="text-gray-600 dark:text-gray-400 text-sm">
-            {{ result.parsedData.description }}
-          </p>
-
-          <div v-if="result.parsedData.location" class="flex items-center space-x-2 text-gray-500 text-sm">
             <UIcon name="i-heroicons-map-pin" class="w-4 h-4" />
-            <span>
+            <span> {{ result.parsedData.description }} </span>
+            <span v-if="result.parsedData.location">
               {{ result.parsedData.location.latitude }}, {{ result.parsedData.location.longitude }}
             </span>
-          </div>
+          </p>
 
           <div v-if="result.parsedData.claims" class="space-y-2">
             <div v-if="result.parsedData.claims.P14" class="flex items-start space-x-2 text-sm">
-              <UIcon name="i-heroicons-building-office-2" class="mt-0.5 w-4 h-4 text-gray-400" />
-              <span class="text-gray-600 dark:text-gray-400">{{ result.parsedData.claims.P14[0] }}</span>
-            </div>
+              <span v-if="result.parsedData.claims.P14" class="flex items-start space-x-2 text-sm">
+                <UIcon name="i-heroicons-building-office-2" class="mt-0.5 w-4 h-4 text-gray-400" />
+                <span class="text-gray-600 dark:text-gray-400">{{ result.parsedData.claims.P14.join(' ') }}</span>
+              </span>
 
-            <div v-if="result.parsedData.claims.P15" class="flex items-center space-x-2 text-sm">
-              <UIcon name="i-heroicons-map" class="w-4 h-4 text-gray-400" />
-              <span class="text-gray-600 dark:text-gray-400">Postal Code: {{ result.parsedData.claims.P15[0] }}</span>
+              <span v-if="result.parsedData.claims.P15" class="flex items-center space-x-2 text-sm">
+                <UIcon name="i-heroicons-map" class="w-4 h-4 text-gray-400" />
+                <span class="text-gray-600 dark:text-gray-400">Postal Code:
+                  {{ result.parsedData.claims.P15.join(',') }}
+                </span>
+              </span>
             </div>
           </div>
         </div>
@@ -108,6 +111,7 @@
               <UIcon name="i-heroicons-arrow-right" class="w-3 h-3" />
             </UButton>
           </div>
+          {{ result }}
         </template>
       </UCard>
     </div>
