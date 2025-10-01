@@ -57,7 +57,6 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/ui',
     '@nuxtjs/sitemap',
-    'nuxt-icon',
   ],
 
   // CSS configuration with Tailwind
