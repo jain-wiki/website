@@ -2,6 +2,7 @@
   "name": "jain-wiki",
   "private": true,
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --port 5016 --host",
