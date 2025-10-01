@@ -55,14 +55,28 @@
             <!-- Filter Options -->
             <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
               <UFormField label="Deity" help="Select or search for a specific deity">
-                <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
-                  :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
-                  @update:search-term="onDeitySearch" label-key="name" class="w-full" />
+                <div class="relative">
+                  <USelectMenu v-model="selectedDeity" :items="deityOptions" placeholder="Select or search deity..."
+                    :search-input="{ placeholder: 'Type to search deities...' }" :loading="deityLoading"
+                    @update:search-term="onDeitySearch" label-key="name" class="w-full" />
+                  <button v-if="selectedDeity" @click="clearDeitySelection" type="button"
+                    class="top-1/2 right-8 z-[20] absolute hover:bg-gray-100 dark:hover:bg-gray-700 p-1 rounded-full transition-colors -translate-y-1/2"
+                    title="Clear deity selection">
+                    <UIcon name="i-heroicons-x-mark" class="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  </button>
+                </div>
               </UFormField>
               <UFormField label="Place" help="Select or search for a specific place">
-                <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
-                  :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
-                  @update:search-term="onPlaceSearch" label-key="name" class="w-full" />
+                <div class="relative">
+                  <USelectMenu v-model="selectedPlace" :items="placeOptions" placeholder="Select or search place..."
+                    :search-input="{ placeholder: 'Type to search places...' }" :loading="placeLoading"
+                    @update:search-term="onPlaceSearch" label-key="name" class="w-full" />
+                  <button v-if="selectedPlace" @click="clearPlaceSelection" type="button"
+                    class="top-1/2 right-8 z-[20] absolute hover:bg-gray-100 dark:hover:bg-gray-700 p-1 rounded-full transition-colors -translate-y-1/2"
+                    title="Clear place selection">
+                    <UIcon name="i-heroicons-x-mark" class="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  </button>
+                </div>
               </UFormField>
             </div>
 
@@ -366,6 +380,18 @@ function clearFilters() {
   searchResults.value = []
   searchError.value = null
   hasSearched.value = false
+}
+
+// Clear deity selection
+function clearDeitySelection() {
+  selectedDeity.value = undefined
+  performSearch(true) // Re-trigger search when deity is cleared
+}
+
+// Clear place selection
+function clearPlaceSelection() {
+  selectedPlace.value = undefined
+  performSearch(true) // Re-trigger search when place is cleared
 }
 
 // Get user location
