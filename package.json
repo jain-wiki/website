@@ -10,20 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/scripts": "0.11.13",
+    "@nuxt/scripts": "0.12.1",
     "@nuxt/ui": "3.3.4",
     "@nuxtjs/sitemap": "^7.4.7",
     "@tailwindcss/vite": "4.1.13",
     "@unhead/vue": "2.0.17",
     "nuxt": "4.0.3",
     "nuxt-icon": "^1.0.0-beta.7",
-    "vue": "3.5.21",
+    "vue": "3.5.22",
     "vue-router": "4.5.1"
   },
   "devDependencies": {
-    "@iconify-json/heroicons": "^1.2.2",
+    "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.68",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vue-tsc": "^3.0.7"
   },
