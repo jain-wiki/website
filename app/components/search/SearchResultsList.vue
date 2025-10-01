@@ -96,11 +96,12 @@
                 View on Maps
               </UButton>
 
-              <UButton v-if="result.parsedData.location" size="sm" variant="soft" color="success"
+              <!-- TODO: Implement this -->
+              <!-- <UButton v-if="result.parsedData.location" size="sm" variant="soft" color="success"
                 @click.stop="$emit('showOnMap', result)">
                 <UIcon name="i-heroicons-map-pin" class="mr-1 w-3 h-3" />
                 Show on Map
-              </UButton>
+              </UButton> -->
             </div>
 
             <UButton size="sm" variant="ghost" @click.stop="$emit('selectResult', result)">
