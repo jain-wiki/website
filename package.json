@@ -11,7 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/scripts": "0.12.1",
+    "@nuxt/scripts": "0.13.4",
     "@nuxt/ui": "^4.0.0",
     "@nuxtjs/sitemap": "^7.4.7",
     "@tailwindcss/vite": "4.1.13",
